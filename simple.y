@@ -4,9 +4,10 @@
    #include "simple_shared.h"                                                        
    #define YYSTYPE char *                                                            
    int yydebug=0;                                                                    
-   int indent=0;                                                                     
+   int indent=0; 
+   int errors = 0;                                                                    
    void yyerror (char const *s);
-   void completed();                                                               
+   void completed();                                                              
 %} 
 
 %token ELSE                                                                         
@@ -71,10 +72,16 @@ arg-list            : arg-list COMMA expression | expression;
 
 void yyerror (char const *s) {
   fprintf (stderr, "%s\n", s);
+  errors++;
 }
 
 void completed(void){
-  fprintf (stderr, "\n ======== Successfully Parsed! ======== \n");
+  if(errors<1){
+    fprintf (stderr, "\n ======== Successfully Parsed! ======== \n");
+  }
+  else{
+    fprintf (stderr, "\n ======== Parse Failed ======== \n");
+  }
 }
 
 int main ()                                                                              

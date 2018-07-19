@@ -69,11 +69,12 @@
    #include "simple_shared.h"                                                        
    #define YYSTYPE char *                                                            
    int yydebug=0;                                                                    
-   int indent=0;                                                                     
+   int indent=0; 
+   int errors = 0;                                                                    
    void yyerror (char const *s);
-   void completed();                                                               
+   void completed();                                                              
 
-#line 77 "simple.tab.c" /* yacc.c:339  */
+#line 78 "simple.tab.c" /* yacc.c:339  */
 
 # ifndef YY_NULLPTR
 #  if defined __cplusplus && 201103L <= __cplusplus
@@ -154,7 +155,7 @@ int yyparse (void);
 
 /* Copy the second part of user declarations.  */
 
-#line 158 "simple.tab.c" /* yacc.c:358  */
+#line 159 "simple.tab.c" /* yacc.c:358  */
 
 #ifdef short
 # undef short
@@ -454,13 +455,13 @@ static const yytype_uint8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    41,    41,    42,    42,    43,    43,    44,    44,    45,
-      45,    46,    47,    47,    48,    48,    49,    49,    50,    51,
-      51,    52,    52,    53,    53,    53,    53,    53,    54,    54,
-      55,    55,    56,    57,    57,    58,    58,    59,    59,    60,
-      60,    61,    61,    61,    61,    61,    61,    62,    62,    63,
-      63,    64,    64,    65,    65,    66,    66,    66,    66,    67,
-      68,    68,    69,    69
+       0,    42,    42,    43,    43,    44,    44,    45,    45,    46,
+      46,    47,    48,    48,    49,    49,    50,    50,    51,    52,
+      52,    53,    53,    54,    54,    54,    54,    54,    55,    55,
+      56,    56,    57,    58,    58,    59,    59,    60,    60,    61,
+      61,    62,    62,    62,    62,    62,    62,    63,    63,    64,
+      64,    65,    65,    66,    66,    67,    67,    67,    67,    68,
+      69,    69,    70,    70
 };
 #endif
 
@@ -1302,7 +1303,7 @@ yyreduce:
   switch (yyn)
     {
       
-#line 1306 "simple.tab.c" /* yacc.c:1646  */
+#line 1307 "simple.tab.c" /* yacc.c:1646  */
       default: break;
     }
   /* User semantic actions sometimes alter yychar, and that requires
@@ -1530,15 +1531,21 @@ yyreturn:
 #endif
   return yyresult;
 }
-#line 70 "simple.y" /* yacc.c:1906  */
+#line 71 "simple.y" /* yacc.c:1906  */
 
 
 void yyerror (char const *s) {
   fprintf (stderr, "%s\n", s);
+  errors++;
 }
 
 void completed(void){
-  fprintf (stderr, "\n ======== Successfully Parsed! ======== \n");
+  if(errors<1){
+    fprintf (stderr, "\n ======== Successfully Parsed! ======== \n");
+  }
+  else{
+    fprintf (stderr, "\n ======== Parse Failed ======== \n");
+  }
 }
 
 int main ()                                                                              
